@@ -1,0 +1,5 @@
+agenda
+agenda_teste
+*.o
+*.exe
+.vscode/
