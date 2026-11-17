@@ -1,0 +1,70 @@
+RELATÓRIO TÉCNICO — AGENDA DE COMPROMISSOS EM C++
+Programação e Sistemas Computacionais II · Centro Universitário Campo Real
+Squad: Marcio Eduardo e Milena Mayara
+
+1. VISÃO GERAL
+A agenda cadastra, lista, busca, edita e exclui compromissos (nome, data, horário
+e local) pelo terminal. Todas as estruturas de dados foram implementadas à mão,
+com new/delete, sem usar contêineres da biblioteca padrão.
+
+2. ESTRUTURAS ESCOLHIDAS E POR QUÊ
+- Lista encadeada (armazenamento principal): a agenda cresce e diminui o tempo
+  todo. Na lista, inserir e remover só religa ponteiros, sem deslocar elementos
+  nem fixar uma capacidade máxima. O custo é não ter acesso direto por índice.
+- Pilha (lixeira): "desfazer exclusão" segue a lógica LIFO: o último compromisso
+  excluído é o primeiro a voltar. A pilha guarda uma cópia, pois o nó original
+  da lista já foi apagado com delete.
+- Fila (lembretes): quem foi marcado primeiro para lembrar é lembrado primeiro
+  (FIFO). Mantém ponteiros para início e fim, então enfileirar e desenfileirar
+  custam O(1).
+- Árvore binária de busca (índice por nome): o percurso in-ordem entrega os
+  compromissos em ordem alfabética sem ordenar nada, e a busca por nome custa
+  O(log n) em média. Nomes repetidos vão sempre para a direita. A árvore não é
+  balanceada; no pior caso (nomes inseridos já em ordem) ela degenera e a busca
+  passa a O(n). Balancear (AVL) seria uma melhoria futura.
+- Vetor temporário de ponteiros (Compromisso**): a busca binária precisa de
+  acesso por índice, que a lista não oferece. Por isso montamos um vetor com os
+  endereços dos nós da lista; ordenar o vetor troca só ponteiros, sem copiar
+  compromissos. O vetor é criado e liberado a cada uso.
+
+3. ALGORITMOS
+Ordenação: Merge Sort (recursivo), por data e horário (chave AAAAMMDDHHMM).
+Escolhido porque tem custo O(n log n) em todos os casos (melhor, médio e pior),
+é estável (compromissos no mesmo horário mantêm a ordem de cadastro) e a agenda
+pode ter milhares de itens. Em troca, usa O(n) de memória auxiliar.
+  Comparação: Insertion/Bubble/Selection são O(n²) no caso médio; com 3003
+  compromissos o Merge Sort fez cerca de 31 mil comparações (n² seria ~9 milhões).
+Busca: sequencial O(n) (funciona sem ordenar) e binária O(log n) (exige vetor
+ordenado). Ordenar custa uma vez; depois cada busca por data é muito mais barata.
+  Medido no menu 9 com 3003 itens: sequencial 2968 comparações x binária 12.
+A binária devolve a primeira ocorrência da data, pois vários compromissos podem
+cair no mesmo dia.
+
+4. COMPLEXIDADE ESPERADA
+  Merge Sort ........ O(n log n) melhor/médio/pior · memória extra O(n)
+  Busca sequencial .. O(1) melhor · O(n) médio/pior
+  Busca binária ..... O(1) melhor · O(log n) médio/pior
+  Árvore (busca) .... O(log n) médio · O(n) pior (árvore degenerada)
+  Lista: inserir no fim O(n) (percorre até o último nó), buscar/remover por ID O(n).
+  Pilha e fila: push/pop/enqueue/dequeue O(1).
+
+5. GERENCIAMENTO DE MEMÓRIA
+- Cada nó (lista, pilha, fila, árvore) é criado com new e liberado com delete;
+  vetores temporários usam new[] e delete[]. Ponteiros liberados recebem nullptr.
+- A árvore guarda ponteiros para compromissos que moram na lista. Para evitar
+  ponteiros soltos, ela é descartada sempre que a lista muda e refeita quando
+  o índice é usado. A pilha e a fila guardam CÓPIAS, por isso continuam válidas
+  mesmo que o compromisso original seja excluído.
+- Ao sair, liberarAgenda() esvazia lista, pilha, fila e árvore.
+- Verificação: compilamos com AddressSanitizer e UBSan e rodamos um roteiro que
+  passa por todos os menus (make teste); não há vazamentos nem acessos inválidos.
+
+6. QUALIDADE DO CÓDIGO
+Arquivo único (src/main.cpp) dividido em seções por estrutura, funções com no
+máximo 30 linhas, comentário de cabeçalho em cada função, validação de entrada
+(datas reais, inclusive ano bissexto, e horários 00:00–23:59).
+
+7. LIMITAÇÕES E MELHORIAS FUTURAS
+Os dados ficam só na memória (não são salvos em arquivo ao sair). Melhorias:
+gravar a agenda em arquivo, desfazer também cadastros e edições, balancear a
+árvore e detectar conflito de horários.

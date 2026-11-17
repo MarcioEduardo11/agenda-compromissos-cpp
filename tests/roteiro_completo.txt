@@ -1,0 +1,68 @@
+abc
+1
+Prova de Calculo
+20
+11
+2026
+8
+0
+Bloco B sala 12
+1
+Consulta dentista
+18
+11
+2026
+14
+30
+Clinica Sorriso
+1
+Reuniao do squad
+31
+2
+2026
+17
+11
+2026
+19
+0
+Online
+2
+3
+dentista
+4
+3
+
+Biblioteca
+s
+19
+11
+2026
+20
+0
+5
+2
+s
+6
+6
+7
+1
+1
+7
+1
+3
+7
+3
+7
+2
+8
+Prova de Calculo
+10
+3000
+9
+26
+12
+2027
+2
+8
+
+0
