@@ -93,11 +93,12 @@ Medido com 3003 compromissos: Merge Sort ≈ 31 mil comparações (feito uma vez
 
 ## Divisão de responsabilidades
 
-Em `src/main.cpp`, cada parte está em uma seção marcada por comentário.
+O desenvolvimento do projeto foi dividido entre os integrantes, considerando as estruturas de dados, funcionalidades e a complexidade de implementação. As partes de maior complexidade, integração e testes foram desenvolvidas em conjunto.
 
 | Integrante | Responsável por |
 |---|---|
-| **Marcio Eduardo** | Entrada de dados, **lista encadeada** e **fila** · R1, R4, R5, R7 · menus 1, 2, 4, 5 e 7 · relatório técnico |
-| **Milena Mayara** | **Pilha**, **árvore binária**, **Merge Sort** e **buscas** · R3, R6, R8, R9, R10 · menus 3, 6, 8, 9 e 10 · roteiro de teste |
+| **Marcio Eduardo** | Entrada e validação de dados; lista encadeada; fila de lembretes; cadastro, listagem, edição e exclusão de compromissos; menus 1, 2, 4, 5 e 7; documentação técnica e descrição das funcionalidades. |
+| **Milena Mayara** | Pilha para desfazer exclusões; árvore binária de busca; índice alfabético; busca por nome; menus 3, 6 e 8; implementação e explicação das funcionalidades relacionadas às estruturas. |
+| **Marcio Eduardo e Milena Mayara** | Integração das estruturas de dados; Merge Sort; busca sequencial e busca binária; comparação de desempenho dos algoritmos; geração de dados para testes; menus 9 e 10; testes gerais, revisão e organização final do projeto. |
 
-Cada integrante apresenta e explica o código que implementou.
+Cada integrante ficou responsável pela implementação e explicação de suas respectivas partes. As funcionalidades de maior complexidade, integração entre módulos e testes de desempenho foram desenvolvidas e revisadas em conjunto, garantindo que ambos compreendessem o funcionamento geral do sistema.
